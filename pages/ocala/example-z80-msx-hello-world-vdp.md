@@ -1,0 +1,25 @@
+---
+title: z80/msx-hello-world-vdp
+---
+```
+arch z80
+include "msx.oc"
+msx:link-as-rom main _
+
+module main {
+    proc main(!) {
+        data message = byte [ "Hello, world!" ] : rodata
+
+        SP <- msx:STACK_ADDR
+        msx:set-vdp-mode 0b0000_0000 0b1110_0000
+
+        msx:set-vdp-write-addr msx:t32nam(0 0)
+        msx:fill-vdp-data/wide ' ' (256 * 3)
+
+        msx:set-vdp-write-addr msx:t32nam(10 12)
+        msx:write-vdp-data message sizeof(message)
+
+        never-return loop { msx:wait }
+    }
+}
+```
