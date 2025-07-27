@@ -8,6 +8,7 @@ github_username:  maokij
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 markdown: GFM
 
