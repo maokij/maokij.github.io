@@ -1,5 +1,5 @@
 ---
-title: arch mos6502
+title: "arch: mos6502"
 ---
 ```
 (arch mos6502
@@ -140,7 +140,7 @@ title: arch mos6502
     (NN EQ?) [0xD0 0x03 0x4C (=l a) (=h a)])
 
   (opcode  #.call (a)   (NN)    [0x20 (=l a) (=h a)])
-  (opcode  #.call (a b) (NN CC) [(=U b)])
+  (opcode  #.call (a b) (NN CC) [(=U)])
 
   (opcode  ORA (a)
     (N)  [0x09 (=l a)]

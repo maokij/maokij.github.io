@@ -1,5 +1,5 @@
 ---
-title: arch z80
+title: "arch: z80"
 ---
 ```
 (arch z80
@@ -291,12 +291,11 @@ title: arch z80
     (N IX$) [0xDD 0xCB (=l b) (=i a 0b1000_0110 0x07 3)]
     (N IY$) [0xFD 0xCB (=l b) (=i a 0b1000_0110 0x07 3)])
 
-  (bytemap JP 0xFF 0 0 0xE9)
   (opcode  JP (a)
     (NN)  [0xC3 (=l a) (=h a)]
     (HL$) [0xE9]
-    (IX$) [0xDD (=m a JP)]
-    (IY$) [0xFD (=m a JP)])
+    (IX$) [0xDD (=i a 0xE9 0 0)]
+    (IY$) [0xFD (=i a 0xE9 0 0)])
   (opcode  JP (a b) (CC NN) [(+ 0b1100_0010 (CC a 3)) (=l b) (=h b)])
 
   (opcode  JR (a) (NN) [0x18 (=rl a -2)])
@@ -449,7 +448,7 @@ title: arch z80
     (NN M?)  [(#.jump (= a) P? )]
     (NN P?)  [(#.jump (= a) M? )]))
 
-(arch (+undocumented z80)
+(arch (z80 +undocumented)
   (operand IXH RegIXH "IXH" "IXH")
   (operand IXL RegIXL "IXL" "IXL")
   (operand IYH RegIYH "IYH" "IYH")
@@ -592,9 +591,9 @@ title: arch z80
     (N IX$ R8) [0xDD 0xCB (=l b) (=i a (+ 0b1000_0000 (R8 c)) 0x07 3)]
     (N IY$ R8) [0xFD 0xCB (=l b) (=i a (+ 0b1000_0000 (R8 c)) 0x07 3)])
 
-  (opcode  IN  (a)   (C$)    [0xED 0x70])
+  (opcode  IN (a)   (C$)    [0xED 0x70])
 
-  (opcode  IN  (a b) (F  C$) [0xED 0x70])
+  (opcode  IN (a b) (F  C$) [0xED 0x70])
 
   (opcode  OUT (a b) (C$ N)  [0xED (=i b 0x71 0 0)])
 
@@ -610,4 +609,305 @@ title: arch z80
     (IYL _)  [(LD (= b) (= a))])
 
   (operator <<< (a b) (_ NN) [(#.REP (= b) `[(SLL (= a))])]))
+
+(arch (z80 +compat8080)
+
+  (opcode  LD (a b)
+    (R8 IX$) [(=U)]
+    (R8 IY$) [(=U)]
+    (IX$ R8) [(=U)]
+    (IY$ R8) [(=U)]
+    (IX$ N)  [(=U)]
+    (IY$ N)  [(=U)]
+    (A I)    [(=U)]
+    (A R)    [(=U)]
+    (I A)    [(=U)]
+    (R A)    [(=U)]
+    (IX NN)  [(=U)]
+    (IY NN)  [(=U)]
+    (DD NN$) [(=U)]
+    (IX NN$) [(=U)]
+    (IY NN$) [(=U)]
+    (NN$ DD) [(=U)]
+    (NN$ IX) [(=U)]
+    (NN$ IY) [(=U)]
+    (SP IX)  [(=U)]
+    (SP IY)  [(=U)])
+
+  (opcode  PUSH (a)
+    (IX) [(=U)]
+    (IY) [(=U)])
+
+  (opcode  POP (a)
+    (IX) [(=U)]
+    (IY) [(=U)])
+
+  (opcode  EX (a b)
+    (AF  AF-) [(=U)]
+    (SP$ IX)  [(=U)]
+    (SP$ IY)  [(=U)])
+  (opcode  EXX  () () [(=U)])
+
+  (opcode  LDI  () () [(=U)])
+  (opcode  LDIR () () [(=U)])
+  (opcode  LDD  () () [(=U)])
+  (opcode  LDDR () () [(=U)])
+
+  (opcode  CPI  () () [(=U)])
+  (opcode  CPIR () () [(=U)])
+  (opcode  CPD  () () [(=U)])
+  (opcode  CPDR () () [(=U)])
+
+  (opcode  ADD (a b)
+    (A IX$) [(=U)]
+    (A IY$) [(=U)]
+    (IX PP) [(=U)]
+    (IY RR) [(=U)])
+
+  (opcode  ADC (a b)
+    (A IX$) [(=U)]
+    (A IY$) [(=U)]
+    (HL DD) [(=U)])
+
+  (opcode  SUB (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  SBC (a b)
+    (A IX$) [(=U)]
+    (A IY$) [(=U)]
+    (HL DD) [(=U)])
+
+  (opcode  AND (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  OR (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  XOR (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  CP (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  INC (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)]
+    (IX)  [(=U)]
+    (IY)  [(=U)])
+
+  (opcode  DEC (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)]
+    (IX)  [(=U)]
+    (IY)  [(=U)])
+
+  (opcode  RLC (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  RL (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  RRC (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  RR (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  SLA (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  SRA (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  SRL (a)
+    (R8)  [(=U)]
+    (HL$) [(=U)]
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  RLD  () () [(=U)])
+  (opcode  RRD  () () [(=U)])
+
+  (opcode  BIT (a b)
+    (N R8)  [(=U)]
+    (N HL$) [(=U)]
+    (N IX$) [(=U)]
+    (N IY$) [(=U)])
+
+  (opcode  SET (a b)
+    (N R8)  [(=U)]
+    (N HL$) [(=U)]
+    (N IX$) [(=U)]
+    (N IY$) [(=U)])
+
+  (opcode  RES (a b)
+    (N R8)  [(=U)]
+    (N HL$) [(=U)]
+    (N IX$) [(=U)]
+    (N IY$) [(=U)])
+
+  (opcode  JP (a)
+    (IX$) [(=U)]
+    (IY$) [(=U)])
+
+  (opcode  JR (a) (NN) [(=U)])
+  (opcode  JR (a b)
+    (C?  NN) [(=U)]
+    (NC? NN) [(=U)]
+    (Z?  NN) [(=U)]
+    (NZ? NN) [(=U)])
+
+  (opcode  DJNZ (a) (NN) [(=U)])
+
+  (opcode  RETI ()  ()   [(=U)])
+  (opcode  RETN ()  ()   [(=U)])
+
+  (opcode  IN (a b) (R8 C$)  [(=U)])
+  (opcode  INI  () () [(=U)])
+  (opcode  INIR () () [(=U)])
+  (opcode  IND  () () [(=U)])
+  (opcode  INDR () () [(=U)])
+
+  (opcode  OUT (a b) (C$ R8)  [(=U)])
+  (opcode  OUTI () () [(=U)])
+  (opcode  OTIR () () [(=U)])
+  (opcode  OUTD () () [(=U)])
+  (opcode  OTDR () () [(=U)])
+
+  (opcode  NEG  () () [(=U)])
+
+  (opcode  IM (a) (N) [(=U)]))
+
+(arch (z80 +r800)
+  (operand IXH RegIXH "IXH" "IXH")
+  (operand IXL RegIXL "IXL" "IXL")
+  (operand IYH RegIYH "IYH" "IYH")
+  (operand IYL RegIYL "IYL" "IYL")
+
+  (registers IXH IXL IYH IYL)
+
+  (map X8 A 7 B 0 C 1 D 2 E 3 IXH 4 IXL 5)
+  (map Y8 A 7 B 0 C 1 D 2 E 3 IYH 4 IYL 5)
+  (map A-E A 7 B 0 C 1 D 2 E 3)
+
+  (opcode  LD (a b)
+    (X8  IXH) [0xDD (+ 0b0100_0000 (X8 a 3) (X8 b))]
+    (IXH A-E) [0xDD (+ 0b0100_0000 (X8 a 3) (X8 b))]
+    (X8  IXL) [0xDD (+ 0b0100_0000 (X8 a 3) (X8 b))]
+    (IXL A-E) [0xDD (+ 0b0100_0000 (X8 a 3) (X8 b))]
+    (Y8  IYH) [0xFD (+ 0b0100_0000 (Y8 a 3) (Y8 b))]
+    (IYH A-E) [0xFD (+ 0b0100_0000 (Y8 a 3) (Y8 b))]
+    (Y8  IYL) [0xFD (+ 0b0100_0000 (Y8 a 3) (Y8 b))]
+    (IYL A-E) [0xFD (+ 0b0100_0000 (Y8 a 3) (Y8 b))]
+
+    (IXH N)   [0xDD (+ 0b0000_0110 (X8 a 3)) (=l b)]
+    (IXL N)   [0xDD (+ 0b0000_0110 (X8 a 3)) (=l b)]
+    (IYH N)   [0xFD (+ 0b0000_0110 (Y8 a 3)) (=l b)]
+    (IYL N)   [0xFD (+ 0b0000_0110 (Y8 a 3)) (=l b)])
+
+  (opcode  ADD (a b)
+    (A IXH)  [0xDD (+ 0b1000_0000 (X8 b))]
+    (A IXL)  [0xDD (+ 0b1000_0000 (X8 b))]
+    (A IYH)  [0xFD (+ 0b1000_0000 (Y8 b))]
+    (A IYL)  [0xFD (+ 0b1000_0000 (Y8 b))])
+
+  (opcode  ADC (a b)
+    (A IXH)  [0xDD (+ 0b1000_1000 (X8 b))]
+    (A IXL)  [0xDD (+ 0b1000_1000 (X8 b))]
+    (A IYH)  [0xFD (+ 0b1000_1000 (Y8 b))]
+    (A IYL)  [0xFD (+ 0b1000_1000 (Y8 b))])
+
+  (opcode  SUB (a)
+    (IXH)  [0xDD (+ 0b1001_0000 (X8 a))]
+    (IXL)  [0xDD (+ 0b1001_0000 (X8 a))]
+    (IYH)  [0xFD (+ 0b1001_0000 (Y8 a))]
+    (IYL)  [0xFD (+ 0b1001_0000 (Y8 a))])
+
+  (opcode  SBC (a b)
+    (A IXH)  [0xDD (+ 0b1001_1000 (X8 b))]
+    (A IXL)  [0xDD (+ 0b1001_1000 (X8 b))]
+    (A IYH)  [0xFD (+ 0b1001_1000 (Y8 b))]
+    (A IYL)  [0xFD (+ 0b1001_1000 (Y8 b))])
+
+  (opcode  AND (a)
+    (IXH)  [0xDD (+ 0b1010_0000 (X8 a))]
+    (IXL)  [0xDD (+ 0b1010_0000 (X8 a))]
+    (IYH)  [0xFD (+ 0b1010_0000 (Y8 a))]
+    (IYL)  [0xFD (+ 0b1010_0000 (Y8 a))])
+
+  (opcode  OR (a)
+    (IXH)  [0xDD (+ 0b1011_0000 (X8 a))]
+    (IXL)  [0xDD (+ 0b1011_0000 (X8 a))]
+    (IYH)  [0xFD (+ 0b1011_0000 (Y8 a))]
+    (IYL)  [0xFD (+ 0b1011_0000 (Y8 a))])
+
+  (opcode  XOR (a)
+    (IXH)  [0xDD (+ 0b1010_1000 (X8 a))]
+    (IXL)  [0xDD (+ 0b1010_1000 (X8 a))]
+    (IYH)  [0xFD (+ 0b1010_1000 (Y8 a))]
+    (IYL)  [0xFD (+ 0b1010_1000 (Y8 a))])
+
+  (opcode  CP (a)
+    (IXH)  [0xDD (+ 0b1011_1000 (X8 a))]
+    (IXL)  [0xDD (+ 0b1011_1000 (X8 a))]
+    (IYH)  [0xFD (+ 0b1011_1000 (Y8 a))]
+    (IYL)  [0xFD (+ 0b1011_1000 (Y8 a))])
+
+  (opcode  INC (a)
+    (IXH)  [0xDD (+ 0b0000_0100 (X8 a 3))]
+    (IXL)  [0xDD (+ 0b0000_0100 (X8 a 3))]
+    (IYH)  [0xFD (+ 0b0000_0100 (Y8 a 3))]
+    (IYL)  [0xFD (+ 0b0000_0100 (Y8 a 3))])
+
+  (opcode  DEC (a)
+    (IXH)  [0xDD (+ 0b0000_0101 (X8 a 3))]
+    (IXL)  [0xDD (+ 0b0000_0101 (X8 a 3))]
+    (IYH)  [0xFD (+ 0b0000_0101 (Y8 a 3))]
+    (IYL)  [0xFD (+ 0b0000_0101 (Y8 a 3))])
+
+  (opcode  IN (a b) (F  C$) [0xED 0x70])
+
+  (opcode  MULUB (a b)
+    (A B) [0xED 0xC1]
+    (A C) [0xED 0xC9]
+    (A D) [0xED 0xD1]
+    (A E) [0xED 0xD9])
+
+  (opcode  MULUW (a b)
+    (HL BC) [0xED 0xC3]
+    (HL SP) [0xED 0xF3])
+
+  (operator <- (a b)
+    (IXH _)  [(LD (= a) (= b))]
+    (IXL _)  [(LD (= a) (= b))]
+    (IYH _)  [(LD (= a) (= b))]
+    (IYL _)  [(LD (= a) (= b))])
+  (operator -> (a b)
+    (IXH _)  [(LD (= b) (= a))]
+    (IXL _)  [(LD (= b) (= a))]
+    (IYH _)  [(LD (= b) (= a))]
+    (IYL _)  [(LD (= b) (= a))]))
 ```

@@ -1,7 +1,7 @@
 ---
 title: 使用方法
-latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.0.6/ocala_Windows_x86_64.zip
-latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.0.6/ocala_Linux_x86_64.tar.gz
+latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.0.8/ocala_Windows_x86_64.zip
+latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.0.8/ocala_Linux_x86_64.tar.gz
 latest_zip_name: ocala_Windows_x86_64.zip
 latest_tgz_name: ocala_Linux_x86_64.tar.gz
 ---
@@ -21,7 +21,7 @@ PS> .\ocala\bin\ocala.exe -V
 ```
 
 1. [最新版]({{ page.latest_zip_url }})をダウンロードします
-2. アーカイブを展開します
+2. インストールしたいフォルダにアーカイブを展開します
 3. 展開された実行ファイルでバージョン情報が表示されることを確認します
    ```
    PS> .\ocala\bin\ocala.exe -V
@@ -37,7 +37,7 @@ $ ./ocala/bin/ocala -V
 ```
 
 1. [最新版]({{ page.latest_tgz_url }})をダウンロードします
-2. アーカイブを展開します
+2. インストールしたいフォルダにアーカイブを展開します
 3. 展開された実行ファイルでバージョン情報が表示されることを確認します
    ```
    $ ./ocala/bin/ocala -V

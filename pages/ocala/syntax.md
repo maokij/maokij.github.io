@@ -80,12 +80,7 @@ callproc
   : CONDDOT? identifierp '(' sig ')'
 
 contextexpr
-  : ( regld
-    | mem
-    | explicitval
-    | '@-' prim
-    ) ( CONDDOT? ( UOP | BOP oper | DOP dotarg )
-      )*
+  : ( regld | mem | explicitval | '@-' prim ) ( UOP | BOP oper | DOP dotarg )*
 
 oper
   : prim ( ':' prim )?
