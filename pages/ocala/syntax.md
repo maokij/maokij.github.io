@@ -104,8 +104,8 @@ dotarg
   | block
 
 explicitval
-  : '$-' constval
-  | '$$-' constval
+  : '$@' constval
+  | '$$@' constval
 
 constexpr
   : iexpr

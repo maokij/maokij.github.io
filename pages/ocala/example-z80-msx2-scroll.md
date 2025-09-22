@@ -5,6 +5,7 @@ title: z80/msx2-scroll
 arch z80
 const FOR_MSX2_OR_LATER = 1
 include "msx.oc"
+optimize flow
 
 msx:link-as-rom main _
 

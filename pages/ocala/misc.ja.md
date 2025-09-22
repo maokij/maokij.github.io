@@ -7,6 +7,7 @@ title: その他詳細
 - [Ocala Syntax]({% link pages/ocala/syntax.md %})
 - [arch: z80]({% link pages/ocala/arch-z80.md %})
 - [arch: mos6502]({% link pages/ocala/arch-mos6502.md %})
+- [最適化]({% link pages/ocala/optimize.ja.md %})
 
 ## サポートされる CPU と命令セット
 

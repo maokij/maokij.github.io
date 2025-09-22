@@ -5,6 +5,7 @@ title: z80/msx-simple-game
 arch z80
 include "msx.oc"
 include "msx/romram.oc"
+optimize flow
 
 msx:link-as-rom main _
 

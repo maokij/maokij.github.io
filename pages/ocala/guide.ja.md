@@ -150,11 +150,13 @@ LD A,
 
 メモリの参照は `[...]` を使用します。
 6502 であってもメモリ参照には括弧を使用する必要があります。
+z80 では `IX` や `IY` でのディスプレースメント指定に演算子は不要です。
 
 ```
   LD A 12
   LD HL [0xfffe]
   C <- [HL@1024] // LD HL, 1024; LD C, (HL)
+  A <- [IX 2]    // LD A, (IX+2)
 
   LDA 1          // LDA #1
   LDA [8]        // LDA 8
@@ -228,7 +230,7 @@ LD A,
 | `break-if <cond>`                | 条件付ループ中断             |
 | **手続き制御**                   |                              |
 | `return`                         | リターン                     |
-| `return-if <cond>`               | (Z80) 条件リターン           |
+| `return-if <cond>`               | 条件リターン                 |
 | `recur`                          | 手続き先頭へジャンプ         |
 | `fallthrough`                    | リターンせず次の手続きを評価 |
 | `never-return loop { ... }`      | 手続き末で無限ループ         |
@@ -257,8 +259,8 @@ Ocala では、定数を定義することができます。
 定数式では他の定数やラベルを参照できます。また、各種の演算子や括弧も利用可能です。
 
 ```
-  data ROM_ADDR = 0x4000
-  data RAM_ADDR = ROM_ADDR + 0x8000
+  const ROM_ADDR = 0x4000
+  const RAM_ADDR = ROM_ADDR + 0x8000
 ```
 
 ## 定数式演算子

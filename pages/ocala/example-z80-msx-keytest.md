@@ -4,6 +4,7 @@ title: z80/msx-keytest
 ```
 arch z80
 include "msx.oc"
+optimize flow
 
 msx:link-as-rom main _
 

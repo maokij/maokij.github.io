@@ -8,6 +8,7 @@ title: "arch: mos6502"
   (operand Y   RegY  "Y"        "Y")
   (operand S   RegS  "S"        "S")
   (operand P   RegP  "P"        "P")
+  (operand PC  RegPC "PC"       "PC")
 
   (operand N   ImmN  "%B"       "#%B" NN temp)
   (operand NN  ImmNN "%W"       "#%W" N)
@@ -31,7 +32,7 @@ title: "arch: mos6502"
   (operand PL? CondPL "PL?" "PL")
   (operand MI? CondMI "MI?" "MI")
 
-  (registers A X Y S P)
+  (registers A X Y S P PC)
   (conditions
     (NE? !=? not-zero?)
     (EQ? ==? zero?)
@@ -141,6 +142,17 @@ title: "arch: mos6502"
 
   (opcode  #.call (a)   (NN)    [0x20 (=l a) (=h a)])
   (opcode  #.call (a b) (NN CC) [(=U)])
+
+  (opcode  #.return () () [0x60])
+  (opcode  #.return (a)
+    (PL?) [0x30 0x01 0x60]
+    (MI?) [0x10 0x01 0x60]
+    (VC?) [0x70 0x01 0x60]
+    (VS?) [0x50 0x01 0x60]
+    (CC?) [0xB0 0x01 0x60]
+    (CS?) [0x90 0x01 0x60]
+    (NE?) [0xF0 0x01 0x60]
+    (EQ?) [0xD0 0x01 0x60])
 
   (opcode  ORA (a)
     (N)  [0x09 (=l a)]
@@ -337,5 +349,19 @@ title: "arch: mos6502"
     (NN VC?) [(#.jump (= a) VS?)]
     (NN VS?) [(#.jump (= a) VC?)]
     (NN PL?) [(#.jump (= a) MI?)]
-    (NN MI?) [(#.jump (= a) PL?)]))
+    (NN MI?) [(#.jump (= a) PL?)])
+
+  (operator -return (a) (PC) [(#.return)])
+
+  (operator -return-if (a b) (PC CC) [(#.return (= b))])
+
+  (operator -return-unless (a b)
+    (PC NE?) [(#.return EQ?)]
+    (PC EQ?) [(#.return NE?)]
+    (PC CC?) [(#.return CS?)]
+    (PC CS?) [(#.return CC?)]
+    (PC VC?) [(#.return VS?)]
+    (PC VS?) [(#.return VC?)]
+    (PC PL?) [(#.return MI?)]
+    (PC MI?) [(#.return PL?)]))
 ```
