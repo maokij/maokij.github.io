@@ -14,3 +14,6 @@ title: サンプルコード集
   シンプルなゲームサンプル
 - [Scroll]({% link pages/ocala/example-z80-msx2-scroll.md %})  
   グラフィック画面(SCREEN 5)でのスムーズな横スクロールサンプル
+- [C-BIOS]({% link pages/ocala/example-z80-msx-cbios.md %})  
+  Ocala 用に変換された C-BIOS(msx1_jp) ソースコード  
+  C-BIOS: https://cbios.sourceforge.net/
