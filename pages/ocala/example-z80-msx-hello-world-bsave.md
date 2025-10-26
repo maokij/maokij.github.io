@@ -1,0 +1,20 @@
+---
+title: z80/msx-hello-world-bsave
+---
+```
+arch z80
+include "msx.oc"
+msx:link-as-bsave msx:PAGE3_ADDR _
+
+module main {
+    proc main() {
+        data message = byte [ "Hello, world!" ] : rodata
+        HL <- message
+        B <- sizeof(message)
+        loop {
+            @[HL] . msx:chput(A =>); HL ++
+        } while/B-
+        return
+    }
+}
+```

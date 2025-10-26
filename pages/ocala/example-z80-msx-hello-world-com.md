@@ -1,0 +1,16 @@
+---
+title: z80/msx-hello-world-com
+---
+```
+arch z80
+include "z80.oc"
+z80:link-as-com _
+
+module main {
+    proc main() {
+        data message = byte [ "Hello, world!$" ] : rodata
+        C@0x09 . DE@message . { CALL 5 }
+        return
+    }
+}
+```
