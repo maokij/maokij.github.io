@@ -5,7 +5,7 @@ title: Ocala
 
 This site is written in Japanese. Please use your browser's translation function.
 
-Ocala は Z80 と 6502 に対応したアセンブラです。
+Ocala は Z80 / R800 / 6502 に対応したアセンブラです。
 
 ## 特徴
 

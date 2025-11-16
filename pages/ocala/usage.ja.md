@@ -1,7 +1,7 @@
 ---
 title: 使用方法
-latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.1.2/ocala_Windows_x86_64.zip
-latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.1.2/ocala_Linux_x86_64.tar.gz
+latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.1.3/ocala_Windows_x86_64.zip
+latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.1.3/ocala_Linux_x86_64.tar.gz
 latest_zip_name: ocala_Windows_x86_64.zip
 latest_tgz_name: ocala_Linux_x86_64.tar.gz
 ---

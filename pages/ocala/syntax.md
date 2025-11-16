@@ -3,107 +3,111 @@ title: Ocala Syntax
 ---
 ```
 program
-  : stmt? ( ';' stmt? )*
+  : statement? ( ';' statement? )*
 
-stmt
+statement
   : MACRO identifierp '('
       ( identifier
-      | label ':' dataexpr
+      | label_name data_expression
       )* REST? ')'
-          ( '[' ( identifier ( '=' symexpr )? )* ']'
+          ( '[' ( identifier ( '=' symbol_expression )? )* ']'
           )? block
-  | PROC identifierp '(' sig ')' ( block | '@' dataexpr )
+  | PROC identifierp '(' signature ')' ( block | '@' data_expression )
   | CONST
       ( identifier
-      | identifierp '(' ( identifier | label ':' dataexpr )* ')'
-      ) '=' dataexpr
-  | DATA datatype ( '=' datatype )? databody
+      | identifierp '(' ( identifier | label_name data_expression )* ')'
+      ) '=' data_expression
+  | DATA data_type ( '=' data_type )? data_body
   | MODULE identifier block
-  | label ':'
+  | LABEL label_name
   | struct
-  | expr
+  | identifier ( operand )*
+  | proc_call
+  | context_expression
 
 struct
-  : STRUCT identifier? '{' structfield? ( ';' structfield? )* '}'
+  : STRUCT identifier? '{' struct_field? ( ';' struct_field? )* '}'
 
-structfield
-  : identifier datatype
+struct_field
+  : identifier data_type
 
-datatype
-  : '[' ( constexpr )? ']' datatype
+data_type
+  : '[' ( constexpr )? ']' data_type
   | identifier
   | struct
 
-databody
-  : ( datalist
+data_body
+  : ( data_list
     | constval
-    )? ( BOP dataval
+    )? ( BINARY_OPERATOR data_value
        )? ( ':' identifier
-          | '@' dataexpr
+          | '@' data_expression
           )?
 
-datalist
-  : '[' ( dataexpr | datalist )* ']'
-  | '{' ( dataexpr | datalist )* '}'
+data_list
+  : '[' ( data_expression | data_list )* ']'
+  | '{' ( data_expression | data_list )* '}'
 
-dataexpr
+data_expression
   : constexpr
-  | explicitval
+  | explicit_value
 
-dataval
+data_value
   : constval
-  | explicitval
+  | explicit_value
 
-symexpr
-  : '%{' symval ( symval )* '}'
+symbol_expression
+  : '%{' symbol_expression_value ( symbol_expression_value )* '}'
 
-symval
+symbol_expression_value
   : IDENTIFIER
   | STRING
 
-sig
-  : ( '-*' )? regs ( '=>' regs )? ( '!' regs )?
+signature
+  : ( '-*' )? registers? ( '=>' registers? )? ( '!' registers? )?
 
-regs
-  : ( REG )*
+registers
+  : REGISTER ( REGISTER )*
 
 block
   : '{' program '}'
   | '={' program '}'
 
-expr
-  : identifier ( oper )*
-  | callproc
-  | contextexpr
+proc_call
+  : CONDDOT? identifierp '(' signature ')'
 
-callproc
-  : CONDDOT? identifierp '(' sig ')'
+context_expression
+  : ( decorated_register
+    | memory_access
+    | explicit_value
+    | '@-' primitive
+    ) ( POSTFIX_OPERATOR
+      | BINARY_OPERATOR operand
+      | DOT_OPERATOR dot_operand
+      )*
 
-contextexpr
-  : ( regld | mem | explicitval | '@-' prim ) ( UOP | BOP oper | DOP dotarg )*
+operand
+  : primitive ( ':' primitive )?
 
-oper
-  : prim ( ':' prim )?
-
-prim
-  : COND
-  | regld
-  | mem
-  | dataval
+primitive
+  : CONDITION
+  | decorated_register
+  | memory_access
+  | data_value
   | block
 
-regld
-  : REG ( '-@' prim )?
+decorated_register
+  : REGISTER ( '-@' primitive )?
 
-mem
-  : '[' ( contextexpr | constexpr )* ']'
+memory_access
+  : '[' ( context_expression | constexpr )* ']'
 
-dotarg
-  : callproc
-  | regld
+dot_operand
+  : proc_call
+  | decorated_register
   | block
 
-explicitval
+explicit_value
   : '$@' constval
   | '$$@' constval
 
@@ -114,7 +118,7 @@ constval
   : ival
 
 iexpr
-  : ival ( BOP ival )*
+  : ival ( BINARY_OPERATOR ival )*
 
 ival
   : INTEGER
@@ -123,7 +127,7 @@ ival
   | IDENTIFIER ( '.-' IDENTIFIER ( '.-' IDENTIFIER )* )?
   | IDENTIFIERP '(' ( iexpr )* ')'
   | '(' iexpr ')'
-  | AOP ival
+  | PREFIX_OPERATOR ival
 
 identifier
   : IDENTIFIER
@@ -131,7 +135,7 @@ identifier
 identifierp
   : IDENTIFIERP
 
-label
-  : LABEL
+label_name
+  : LABEL_NAME
 
 ```
