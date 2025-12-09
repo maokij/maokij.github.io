@@ -70,8 +70,7 @@ registers
   : REGISTER ( REGISTER )*
 
 block
-  : '{' program '}'
-  | '={' program '}'
+  : ( '{' | '={' ) statement? ( ';' statement? )* '}'
 
 proc_call
   : CONDDOT? identifierp '(' signature ')'

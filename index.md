@@ -7,6 +7,12 @@ This site is written in Japanese. Please use your browser's translation function
 
 Ocala は Z80 / R800 / 6502 に対応したアセンブラです。
 
+MSX SPRITE32:  
+<img src="{{site.baseurl}}/assets/images/msx-sprite32.gif" class="screenshot">
+
+MSX2 SCROLL:  
+<img src="{{site.baseurl}}/assets/images/msx2-scroll.gif" class="screenshot">
+
 ## 特徴
 
 - モジュールと名前空間
@@ -15,6 +21,8 @@ Ocala は Z80 / R800 / 6502 に対応したアセンブラです。
 - 豊富な制御構造(`if`、 `loop`など)
 - 機械語命令の中置記法にも対応
 - MSX BIOS ライブラリ添付
+
+詳細は [Ocala 概観]({% link pages/ocala/guide.ja.md %}) をご覧ください。
 
 ## コード例(MSX 用 Hello world)
 
@@ -71,3 +79,5 @@ Ocala は Z80 / R800 / 6502 に対応したアセンブラです。
 
        - c000                                 .org 49152
 ```
+
+その他のコード例は [サンプルコード]({% link pages/ocala/examples.ja.md %}) をご覧ください。

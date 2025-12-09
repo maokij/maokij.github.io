@@ -3,7 +3,8 @@ layout: page
 
 title: Ocala ドキュメント
 description: Ocala のドキュメントサイトです。
-github_username:  maokij
+github_username: maokij
+twitter_username: maokij8
 
 theme: minima
 plugins:

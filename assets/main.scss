@@ -23,3 +23,11 @@ div.hint {
   margin: 1rem 0;
   border-radius: 8px;
 }
+
+img.screenshot {
+  display: inline-block;
+  width: 768px;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 1rem;
+}
