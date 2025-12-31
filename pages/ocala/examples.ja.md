@@ -13,6 +13,8 @@ title: サンプルコード集
   COM 形式の HelloWorld プログラム
 - [HelloWorld(VDP)]({% link pages/ocala/example-z80-msx-hello-world-vdp.md %})  
   VDP を直接利用する HelloWorld プログラム
+- [Colortext]({% link pages/ocala/example-z80-msx-colortext.md %})  
+  MSX1 での色付き文字サンプル
 - [Keytest]({% link pages/ocala/example-z80-msx-keytest.md %})  
   キーボード入力テストプログラム  
   <img src="{{site.baseurl}}/assets/images/msx-keytest.png" class="screenshot">
