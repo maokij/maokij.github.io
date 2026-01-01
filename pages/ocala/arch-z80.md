@@ -434,9 +434,21 @@ title: "arch: z80"
     (A NN) [(#.REP (= b) `[(RRA)])]
     (_ NN) [(#.REP (= b) `[(RR (= a))])])
 
-  (operator <<  (a b) (_ NN) [(#.REP (= b) `[(SLA (= a))])])
-  (operator >>  (a b) (_ NN) [(#.REP (= b) `[(SRA (= a))])])
-  (operator >>> (a b) (_ NN) [(#.REP (= b) `[(SRL (= a))])])
+  (operator <<  (a b)
+    (R8 NN) [(#.REP (= b) `[(SLA (= a))])]
+    (BC NN) [(#.REP (= b) `[(SLA C) (RL B)])]
+    (DE NN) [(#.REP (= b) `[(SLA E) (RL D)])]
+    (HL NN) [(#.REP (= b) `[(ADD HL HL)])])
+  (operator >>  (a b)
+    (R8 NN) [(#.REP (= b) `[(SRA (= a))])]
+    (BC NN) [(#.REP (= b) `[(SRA B) (RR C)])]
+    (DE NN) [(#.REP (= b) `[(SRA D) (RR E)])]
+    (HL NN) [(#.REP (= b) `[(SRA H) (RR L)])])
+  (operator >>> (a b)
+    (R8 NN) [(#.REP (= b) `[(SRL (= a))])]
+    (BC NN) [(#.REP (= b) `[(SRL B) (RR C)])]
+    (DE NN) [(#.REP (= b) `[(SRL D) (RR E)])]
+    (HL NN) [(#.REP (= b) `[(SRL H) (RR L)])])
 
   (operator -set   (a b) (_ _) [(SET (= b) (= a))])
   (operator -reset (a b) (_ _) [(RES (= b) (= a))])

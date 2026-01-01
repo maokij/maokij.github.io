@@ -1,7 +1,7 @@
 ---
 title: 使用方法
-latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.1.6/ocala_Windows_x86_64.zip
-latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.1.6/ocala_Linux_x86_64.tar.gz
+latest_zip_url: https://github.com/maokij/ocala/releases/download/v0.1.7/ocala_Windows_x86_64.zip
+latest_tgz_url: https://github.com/maokij/ocala/releases/download/v0.1.7/ocala_Linux_x86_64.tar.gz
 latest_zip_name: ocala_Windows_x86_64.zip
 latest_tgz_name: ocala_Linux_x86_64.tar.gz
 ---
@@ -99,4 +99,32 @@ v.0.1.5 から、リリースに ocala-language-server が含まれます。
    (use-package ocala-mode
      :mode "\\.oc\\'"
      :config (add-hook 'ocala-mode-hook #'eglot-ensure))
+   ```
+
+### Vim での利用
+
+ここでは vim-plug / vim-lsp を利用する設定について記載します。
+
+1. ocala のアーカイブを展開します(ocala のインストール時のものを再利用できます)
+   ```
+   $ tar xvf {{ page.latest_tgz_name }}
+   ```
+2. 環境変数 PATH に含まれるディレクトリに ocala-language-server のシンボリックを作成します
+   ```
+   $ ln -nfs "$(realpath ./ocala/bin/ocala-language-server)" ~/.local/bin/
+   ```
+3. .vimrc に設定を追加します(`<path-to-ocala>` は 1. の展開パスです)
+   ```
+   Plug '<path-to-ocala>/ocala/share/ocala/misc'
+   ...
+   if executable('ocala-language-server')
+       augroup ocala_vim_lsp
+           au!
+           au User lsp_setup call lsp#register_server({
+               \ 'name': 'ocala-language-server',
+               \ 'cmd': {server_info->['ocala-language-server']},
+               \ 'allowlist': ['ocala'],
+               \ })
+       augroup END
+   endif
    ```
